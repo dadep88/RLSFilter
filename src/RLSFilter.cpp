@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-using namespace rls_dyn_model_ident;
+using namespace rls_filter;
 using namespace Eigen;
 
 RLSFilter::RLSFilter(int n, double lam, double delta)

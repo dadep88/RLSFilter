@@ -8,7 +8,7 @@
 #include <Eigen/Dense>
 using namespace Eigen;
 
-namespace rls_dyn_model_ident {
+namespace rls_filter {
 
 class RLSFilter {
 private:
@@ -53,6 +53,6 @@ public:
   [[nodiscard]] const MatrixXd &P() const noexcept { return P_; };
 };
 
-} // namespace rls_dyn_model_ident
+} // namespace rls_filter
 
 #endif // RLS_DYN_MODEL_IDENT_RLS_H

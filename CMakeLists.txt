@@ -12,14 +12,14 @@ set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER include)
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 target_link_libraries(
         ${PROJECT_NAME}
-        PRIVATE
+        PUBLIC
         Eigen3::Eigen
 )
 
