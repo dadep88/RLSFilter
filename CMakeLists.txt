@@ -32,6 +32,7 @@ add_custom_target(clang-format
         COMMAND ${${PROJECT_NAME}_CLANG_FORMAT_BINARY}
         -i ${ALL_SOURCE_FILES} ${sources} ${exe_sources} ${headers})
 
+enable_testing()
 add_subdirectory(test)
 
 
