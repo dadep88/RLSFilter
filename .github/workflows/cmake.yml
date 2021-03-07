@@ -18,10 +18,7 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Dependencies 
-      run:      
-        brew update
-        brew install eigen
-        brew install googletest
+      run: brew upgrade brew install eigen brew install googletest
 
 
     - name: Create Build Environment
