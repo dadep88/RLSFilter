@@ -17,8 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Dependencies [Ubuntu]
-      run: |macos-latest        
+    - name: Dependencies 
+      run: macos-latest        
         brew update
         brew install eigen
         brew install googletest
