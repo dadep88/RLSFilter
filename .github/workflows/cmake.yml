@@ -12,22 +12,16 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestmacos-latest
 
     steps:
     - uses: actions/checkout@v2
     
     - name: Dependencies [Ubuntu]
-      run: |
-        sudo apt-get update
-        sudo apt-get install git build-essential cmake libeigen3-dev valgrind libgtest-dev
-        sudo apt-get install libgtest-dev
-        cd /usr/src/gtest
-        sudo cmake CMakeLists.txt
-        sudo make
-        sudo cp *.a /usr/lib
-        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
-        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+      run: |macos-latest        
+        brew update
+        brew install eigen
+        brew install googletest
 
 
     - name: Create Build Environment
