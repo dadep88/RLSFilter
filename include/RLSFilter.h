@@ -12,7 +12,7 @@ namespace rls_filter {
 
 class RLSFilter {
 private:
-  int n_;          /// Filter order
+  unsigned int n_; /// Filter order
   double lam_;     /// Forgetting factor
   double lam_inv_; /// Inverse forgetting facotr
   double delta_;   /// Initial gain value of matrix P
@@ -27,19 +27,12 @@ public:
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
-  RLSFilter(int n, double lam, double delta);
-
-  /// Set filter coefficient values
-  /// \param w0 - Coefficient values
-  void set_estimated_coeffs(const VectorXd &w0);
+  RLSFilter(unsigned int n, double lam, double delta);
 
   /// Update filter with new data
   /// \param x - Input vector
   /// \param y - Output value
   void update(const VectorXd x, const double y);
-
-  /// Get estimated filter coefficients
-  const VectorXd &get_estimated_coeffs() const noexcept { return w_; };
 
   /// Estimate filter output
   /// \param x
@@ -48,7 +41,20 @@ public:
     return w_.transpose() * x;
   };
 
-  [[nodiscard]] double a_priori_err() const noexcept { return err_; };
+  /// Set filter coefficient values
+  /// \param w0 - Coefficient values
+  void set_estimated_coeffs(const VectorXd &w0);
+
+  ///  Set forgetting factor value
+  /// \param lam - Forgetting factor value
+  void set_forgetting_factor(const double lam);
+
+  /// Get estimated filter coefficients
+  [[nodiscard]] const VectorXd &estimated_coeffs() const noexcept {
+    return w_;
+  };
+
+  [[nodiscard]] const double a_priori_err() const noexcept { return err_; };
   [[nodiscard]] const VectorXd &gains() const noexcept { return g_; };
   [[nodiscard]] const MatrixXd &P() const noexcept { return P_; };
 };
