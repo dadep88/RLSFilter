@@ -32,12 +32,12 @@ public:
   /// Update filter with new data
   /// \param x - Input vector
   /// \param y - Output value
-  void update(const VectorXd x, const double y);
+  void update(const VectorXd& x, const double y);
 
   /// Estimate filter output
   /// \param x
   /// \return
-  [[nodiscard]] double predict(const VectorXd x) const noexcept {
+  [[nodiscard]] double predict(const VectorXd& x) const noexcept {
     return w_.transpose() * x;
   };
 

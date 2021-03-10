@@ -13,7 +13,7 @@ TEST(RLSFilterEstimation, StadyStateEstimation) {
 
     double lower_bound = 0;
     double upper_bound = 10000;
-    std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
+    std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
     std::default_random_engine re;
 
   RLSFilter rls_filter(4, 0.99999, 1.0);
@@ -26,5 +26,5 @@ TEST(RLSFilterEstimation, StadyStateEstimation) {
       double y = x.transpose() * real_coeffs;
       rls_filter.update(x, y);
   }
-    ASSERT_TRUE(rls_filter.get_estimated_coeffs().isApprox(real_coeffs, 1e-5));
+    ASSERT_TRUE(rls_filter.estimated_coeffs().isApprox(real_coeffs, 1e-5));
 }
