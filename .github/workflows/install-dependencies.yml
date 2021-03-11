@@ -40,9 +40,9 @@ jobs:
       - name: Dependencies [macOS]
         if: matrix.os == 'macOS-latest'
         run: |
-          brew : eigen
+          brew: eigen
 
       - name: Dependencies [Ubuntu]
         if: matrix.os == 'ubuntu-latest'
         run: |
-          apt : libeigen3-dev 
+          apt: libeigen3-dev
