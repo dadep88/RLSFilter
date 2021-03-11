@@ -18,31 +18,31 @@ jobs:
         build_type: [ Release ]
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
-        steps:
-          - uses: actions/checkout@master
+    steps:
+      - uses: actions/checkout@master
 
-          # Print environment variables to simplify development and debugging
-          - name: Environment Variables
-            shell: bash
-            run: env
+      # Print environment variables to simplify development and debugging
+      - name: Environment Variables
+        shell: bash
+        run: env
 
-          # ============
-          # DEPENDENCIES
-          # ============
+      # ============
+      # DEPENDENCIES
+      # ============
 
-          - name: Dependencies [Windows]
-            if: matrix.os == 'windows-latest'
-            run: |
-              github:
-                - path: eigenteam/eigen-git-mirror
-                  ref: 3.3.7
+      - name: Dependencies [Windows]
+        if: matrix.os == 'windows-latest'
+        run: |
+          github:
+            - path: eigenteam/eigen-git-mirror
+              ref: 3.3.7
 
-          - name: Dependencies [macOS]
-            if: matrix.os == 'macOS-latest'
-            run: |
-              brew : eigen
+      - name: Dependencies [macOS]
+        if: matrix.os == 'macOS-latest'
+        run: |
+          brew : eigen
 
-          - name: Dependencies [Ubuntu]
-            if: matrix.os == 'ubuntu-latest'
-            run: |
-              apt : libeigen3-dev 
+      - name: Dependencies [Ubuntu]
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          apt : libeigen3-dev 
