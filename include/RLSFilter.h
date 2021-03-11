@@ -43,14 +43,14 @@ public:
 
   /// Set filter coefficient values
   /// \param w0 - Coefficient values
-  void set_estimated_coeffs(const VectorXd &w0);
+  void set_estimated_coefficients(const VectorXd &w0);
 
   ///  Set forgetting factor value
   /// \param lam - Forgetting factor value
   void set_forgetting_factor(const double lam);
 
   /// Get estimated filter coefficients
-  [[nodiscard]] const VectorXd &estimated_coeffs() const noexcept {
+  [[nodiscard]] const VectorXd &estimated_coefficients() const noexcept {
     return w_;
   };
 

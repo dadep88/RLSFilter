@@ -26,5 +26,5 @@ TEST(RLSFilterEstimation, StadyStateEstimation) {
       double y = x.transpose() * real_coeffs;
       rls_filter.update(x, y);
   }
-    ASSERT_TRUE(rls_filter.estimated_coeffs().isApprox(real_coeffs, 1e-5));
+    ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(real_coeffs, 1e-5));
 }

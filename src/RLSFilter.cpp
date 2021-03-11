@@ -15,7 +15,7 @@ RLSFilter::RLSFilter(unsigned int n, double lam, double delta)
   set_forgetting_factor(lam);
 }
 
-void RLSFilter::set_estimated_coeffs(const VectorXd &w0) {
+void RLSFilter::set_estimated_coefficients(const VectorXd &w0) {
   if (w0.rows() == n_) {
     w_ = w0;
   } else {
