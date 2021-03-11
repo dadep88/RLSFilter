@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI of eigen-quadprog
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest]
+        build-type: [Debug, RelWithDebInfo]
+        compiler: [gcc, clang]
+        #exclude:
+          # Only default compiler on macos-latest and windows-latest
+         # - os: macos-latest
+           # compiler: clang
+          #- os: windows-latest
+            #compiler: clang
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
+    - name: Install dependencies
+      with:
+        compiler: ${{ matrix.compiler }}
+        build-type: ${{ matrix.build-type }}
+        ubuntu: |
+          apt: libeigen3-dev doxygen doxygen-latex libboost-all-dev
+        macos: |
+          cask: gfortran
+          brew: eigen boost
+        windows: |
+          github:
+            - path: eigenteam/eigen-git-mirror
+              ref: 3.3.7
