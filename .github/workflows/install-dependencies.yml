@@ -38,7 +38,6 @@ jobs:
       - name: Dependencies [macOS]
         if: matrix.os == 'macOS-latest'
         run: |
-          brew ungrade
           brew install eigen
 
       - name: Dependencies [Ubuntu]
