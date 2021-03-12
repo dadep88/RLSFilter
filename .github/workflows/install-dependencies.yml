@@ -44,7 +44,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install libgtest-dev
+          sudo apt-get install libgtest-dev libeigen3-dev
           echo $PATH
           cd $HOME
           mkdir gtest
