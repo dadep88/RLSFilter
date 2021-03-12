@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         build_type: [ Release ]
-        os: [ ubuntu-latest, macOS-latest ] #windows-latest, 
+        os: [ ubuntu-latest, macOS-latest ] #windows-latest,
 
     steps:
       - uses: actions/checkout@master
@@ -45,18 +45,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libgtest-dev libeigen3-dev
-          echo $PATH
-          cd $HOME
-          mkdir gtest
-          cp -R /usr/src/googletest/* ./gtest
-
-          cd gtest
-          mkdir build
-          cd build
-
-          cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/gtest-install
-          make install -j $(nproc)
-          echo "GTEST_ROOT=$HOME/gtest-install" >> $GITHUB_ENV
 
       - name: Create Build Environment
           # Some projects don't allow in-source building, so create a separate build directory
