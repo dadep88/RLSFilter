@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         build_type: [ Release ]
-        os: [  windows-latest, macOS-latest ] #ubuntu-latest,
+        os: [ ubuntu-latest, macOS-latest ] #windows-latest, 
 
     steps:
       - uses: actions/checkout@master
