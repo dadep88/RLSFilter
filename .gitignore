@@ -39,4 +39,4 @@
 cmake-build*
 
 # Documentation
-.docs
+docs
