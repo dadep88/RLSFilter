@@ -38,7 +38,7 @@ jobs:
       - name: Dependencies [macOS]
         if: matrix.os == 'macOS-latest'
         run: |
-          brew install eigen googletest doxygen
+          brew install eigen googletest graphviz doxygen
 
       - name: Dependencies [Ubuntu]
         if: matrix.os == 'ubuntu-latest'
