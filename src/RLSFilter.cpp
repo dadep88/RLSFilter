@@ -32,7 +32,7 @@ void RLSFilter::set_forgetting_factor(const double lam) {
   }
 }
 
-void RLSFilter::update(const VectorXd& x, const double y) {
+void RLSFilter::update(const VectorXd &x, const double y) {
   err_ = y - predict(x);
   MatrixXd alpha = P_ * lam_inv_;
   g_ = (P_ * x) / (lam_ + x.transpose() * P_ * x);

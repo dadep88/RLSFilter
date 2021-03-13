@@ -12,15 +12,15 @@ namespace rls_filter {
 
 class RLSFilter {
 private:
-  unsigned int n_; /// Filter order
-  double lam_;     /// Forgetting factor
-  double lam_inv_; /// Inverse forgetting facotr
-  double delta_;   /// Initial gain value of matrix P
-  VectorXd w_;     /// Filter coefficients vector
-  MatrixXd P_;
-  VectorXd g_; /// Filter gains
-  double err_; /// A priori error
-  unsigned long long count_;
+  unsigned int n_; /**< Filter order */
+  double lam_;     /**< Forgetting factor */
+  double lam_inv_; /**< Inverse forgetting factor */
+  double delta_;   /**< Initial gain value of matrix P */
+  VectorXd w_;     /**< Filter coefficients vector */
+  MatrixXd P_; /**< Covariance error matrix */
+  VectorXd g_; /**< Filter gains */
+  double err_; /**< A priori error */
+  unsigned long long count_; /**< Count of filter updates */
 
 public:
   /// Recursive least square ctor
@@ -32,12 +32,12 @@ public:
   /// Update filter with new data
   /// \param x - Input vector
   /// \param y - Output value
-  void update(const VectorXd& x, const double y);
+  void update(const VectorXd &x, const double y);
 
   /// Estimate filter output
   /// \param x
-  /// \return
-  [[nodiscard]] double predict(const VectorXd& x) const noexcept {
+  /// \return a priori output estimate
+  [[nodiscard]] double predict(const VectorXd &x) const noexcept {
     return w_.transpose() * x;
   };
 
@@ -50,12 +50,21 @@ public:
   void set_forgetting_factor(const double lam);
 
   /// Get estimated filter coefficients
+  /// \return vector od estimated filter coefficients
   [[nodiscard]] const VectorXd &estimated_coefficients() const noexcept {
     return w_;
   };
 
+  /// Get a priori estimate error
+  /// \return a priori error
   [[nodiscard]] const double a_priori_err() const noexcept { return err_; };
+
+  /// Get filter gains vector
+  /// \return filter gains vector
   [[nodiscard]] const VectorXd &gains() const noexcept { return g_; };
+
+  /// Get filter covariance matrix
+  /// \return filter covariance matrix
   [[nodiscard]] const MatrixXd &P() const noexcept { return P_; };
 };
 

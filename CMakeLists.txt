@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.19)
 project(RLSFilter LANGUAGES CXX VERSION 0.0.0 DESCRIPTION "C++ RLS filter")
-
 set(CMAKE_CXX_STANDARD 20)
 
 set(CODE_COVERAGE_VERBOSE True)
+set(RLSFilter_ENABLE_DOXYGEN True)
+
+
+
 include(cmake/CodeCoverage.cmake)
 APPEND_COVERAGE_COMPILER_FLAGS()
 
@@ -38,6 +41,19 @@ add_custom_target(clang-format
 
 enable_testing()
 add_subdirectory(test)
+
+if(${PROJECT_NAME}_ENABLE_DOXYGEN)
+    set(DOXYGEN_CALLER_GRAPH YES)
+    set(DOXYGEN_CALL_GRAPH YES)
+    set(DOXYGEN_EXTRACT_ALL YES)
+    set(DOXYGEN_EXTRACT_PRIVATE YES)
+    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs)
+
+    find_package(Doxygen REQUIRED dot)
+    doxygen_add_docs(doxygen-docs ${PROJECT_SOURCE_DIR})
+
+    message( VERBOSE "Doxygen has been setup and documentation is now available.")
+endif()
 
 
 

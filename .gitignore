@@ -37,3 +37,6 @@
 
 # Build dir
 cmake-build*
+
+# Documentation
+.docs
