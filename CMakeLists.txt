@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CODE_COVERAGE_VERBOSE True)
 set(RLSFilter_ENABLE_DOXYGEN True)
 
-
-
 include(cmake/CodeCoverage.cmake)
 APPEND_COVERAGE_COMPILER_FLAGS()
 
@@ -49,7 +47,7 @@ if(${PROJECT_NAME}_ENABLE_DOXYGEN)
     set(DOXYGEN_EXTRACT_PRIVATE YES)
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs)
 
-    find_package(Doxygen REQUIRED dot)
+    find_package(Doxygen)
     doxygen_add_docs(doxygen-docs ${PROJECT_SOURCE_DIR})
 
     message( VERBOSE "Doxygen has been setup and documentation is now available.")
