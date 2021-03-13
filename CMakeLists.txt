@@ -3,6 +3,10 @@ project(RLSFilter LANGUAGES CXX VERSION 0.0.0 DESCRIPTION "C++ RLS filter")
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(CODE_COVERAGE_VERBOSE True)
+include(cmake/CodeCoverage.cmake)
+APPEND_COVERAGE_COMPILER_FLAGS()
+
 include(cmake/SourcesAndHeaders.cmake)
 
 add_library(${PROJECT_NAME} ${sources} ${headers})
