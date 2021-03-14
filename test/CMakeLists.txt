@@ -6,7 +6,7 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIR})
 
 #Add test cpp file
-add_executable("${PROJECT_NAME}_test" test_rls_filter.cpp)
+add_executable("${PROJECT_NAME}_test" ${test_sources})
 target_include_directories("${PROJECT_NAME}_test" PRIVATE include)
 
 #Link test executable against gtest &gtest_main

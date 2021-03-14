@@ -23,7 +23,7 @@ private:
   unsigned long long count_; /**< Count of filter updates */
 
 public:
-  /// Recursive least square ctor
+  /// Recursive least square filter ctor
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
@@ -89,7 +89,7 @@ public:
   }
 
   /// Get estimated filter coefficients
-  /// \return vector od estimated filter coefficients
+  /// \return vector of estimated filter coefficients
   [[nodiscard]] const VectorXd &estimated_coefficients() const noexcept {
     return w_;
   };
