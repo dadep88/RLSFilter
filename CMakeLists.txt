@@ -10,21 +10,23 @@ APPEND_COVERAGE_COMPILER_FLAGS()
 
 include(cmake/SourcesAndHeaders.cmake)
 
-add_library(${PROJECT_NAME} ${sources} ${headers})
+add_library(${PROJECT_NAME} INTERFACE)
+
+target_sources(${PROJECT_NAME} INTERFACE ${headers})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER include)
 
-target_include_directories(${PROJECT_NAME} PUBLIC include)
-target_include_directories(${PROJECT_NAME} PRIVATE src)
+target_include_directories(${PROJECT_NAME} INTERFACE include)
+#target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 target_link_libraries(
         ${PROJECT_NAME}
-        PUBLIC
+        INTERFACE
         Eigen3::Eigen
 )
 
@@ -35,7 +37,7 @@ endif()
 
 add_custom_target(clang-format
         COMMAND ${${PROJECT_NAME}_CLANG_FORMAT_BINARY}
-        -i ${ALL_SOURCE_FILES} ${sources} ${exe_sources} ${headers})
+        -i ${ALL_SOURCE_FILES} ${headers} ${test_sources})
 
 enable_testing()
 add_subdirectory(test)

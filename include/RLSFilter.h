@@ -12,14 +12,14 @@ namespace rls_filter {
 
 class RLSFilter {
 private:
-  unsigned int n_; /**< Filter order */
-  double lam_;     /**< Forgetting factor */
-  double lam_inv_; /**< Inverse forgetting factor */
-  double delta_;   /**< Initial gain value of matrix P */
-  VectorXd w_;     /**< Filter coefficients vector */
-  MatrixXd P_; /**< Covariance error matrix */
-  VectorXd g_; /**< Filter gains */
-  double err_; /**< A priori error */
+  unsigned int n_;           /**< Filter order */
+  double lam_;               /**< Forgetting factor */
+  double lam_inv_;           /**< Inverse forgetting factor */
+  double delta_;             /**< Initial gain value of matrix P */
+  VectorXd w_;               /**< Filter coefficients vector */
+  MatrixXd P_;               /**< Covariance error matrix */
+  VectorXd g_;               /**< Filter gains */
+  double err_;               /**< A priori error */
   unsigned long long count_; /**< Count of filter updates */
 
 public:
@@ -27,12 +27,24 @@ public:
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
-  RLSFilter(unsigned int n, double lam, double delta);
+  RLSFilter(unsigned int n, double lam, double delta)
+      : n_(n), lam_(1.0), lam_inv_(1.0), delta_(delta), w_(VectorXd::Zero(n_)),
+        P_(MatrixXd::Identity(n_, n_) * delta_), g_(VectorXd::Zero(n_)),
+        err_(0.0), count_(0) {
+    set_forgetting_factor(lam);
+  }
 
   /// Update filter with new data
   /// \param x - Input vector
   /// \param y - Output value
-  void update(const VectorXd &x, const double y);
+  void update(const VectorXd &x, const double y) {
+    err_ = y - predict(x);
+    MatrixXd alpha = P_ * lam_inv_;
+    g_ = (P_ * x) / (lam_ + x.transpose() * P_ * x);
+    P_ = (MatrixXd::Identity(n_, n_) - g_ * x.transpose()) * alpha;
+    w_ += g_ * err_;
+    count_++;
+  };
 
   /// Estimate filter output
   /// \param x
@@ -43,11 +55,25 @@ public:
 
   /// Set filter coefficient values
   /// \param w0 - Coefficient values
-  void set_estimated_coefficients(const VectorXd &w0);
+  void set_estimated_coefficients(const VectorXd &w0) {
+    if (w0.rows() == n_) {
+      w_ = w0;
+    } else {
+      throw std::invalid_argument("Wrong initial state dimension.");
+    }
+  }
 
   ///  Set forgetting factor value
   /// \param lam - Forgetting factor value
-  void set_forgetting_factor(const double lam);
+  void set_forgetting_factor(const double lam) {
+    if ((lam > 0) && (lam <= 1.0)) {
+      lam_ = lam;
+      lam_inv_ = 1.0 / lam_;
+    } else {
+      throw std::invalid_argument(
+          "Invalid forgetting factor (0 < lambda <= 1).");
+    }
+  }
 
   /// Get estimated filter coefficients
   /// \return vector od estimated filter coefficients
