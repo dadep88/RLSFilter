@@ -29,9 +29,11 @@ public:
   /// \param delta - Initial gain value of matrix P
   RLSFilter(unsigned int n, double lam, double delta)
       : n_(n), lam_(1.0), lam_inv_(1.0), delta_(delta), w_(VectorXd::Zero(n_)),
-        P_(MatrixXd::Identity(n_, n_) * delta_), g_(VectorXd::Zero(n_)),
-        err_(0.0), count_(0) {
+        P_(MatrixXd::Identity(n_, n_)), g_(VectorXd::Zero(n_)), err_(0.0),
+        count_(0) {
     set_forgetting_factor(lam);
+    set_initial_covariance_matrix_gain(delta);
+    P_ *= delta_;
   }
 
   /// Update filter with new data
@@ -72,6 +74,17 @@ public:
     } else {
       throw std::invalid_argument(
           "Invalid forgetting factor (0 < lambda <= 1).");
+    }
+  }
+
+  /// Set initial covariance matrix gain
+  /// \param delta
+  void set_initial_covariance_matrix_gain(const double delta) {
+    if (delta > 0.0) {
+      delta_ = delta;
+    } else {
+      throw std::invalid_argument(
+          "Invalid covariance matrix gain factor (delta > 0).");
     }
   }
 

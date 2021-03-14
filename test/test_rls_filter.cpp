@@ -16,14 +16,18 @@ TEST(RLSFilterEstimation, StadyStateEstimation) {
   std::default_random_engine re;
 
   RLSFilter rls_filter(4, 0.99999, 1.0);
-  VectorXd real_coeffs(4);
-  real_coeffs << 4, 0.5, 3.0, 1.0;
+  VectorXd w_real(4);
+  VectorXd w0(4);
+  w_real << 4.0, 0.5, 3.0, 1.0;
+  w0 << 1.0, 1.0, 1.0, 1.0;
 
-  for (auto i = 0; i < 10000; i++) {
+  rls_filter.set_estimated_coefficients(w0);
+
+  for (auto i = 0; i < 100000; i++) {
     VectorXd x(4);
     x << unif(re), unif(re), unif(re), unif(re);
-    double y = x.transpose() * real_coeffs;
+    double y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(real_coeffs, 1e-5));
+  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
 }
