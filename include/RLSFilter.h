@@ -17,7 +17,7 @@ private:
   double lam_inv_;           /**< Inverse forgetting factor */
   double delta_;             /**< Initial gain value of matrix P */
   VectorXd w_;               /**< Filter coefficients vector */
-  MatrixXd P_;               /**< Covariance error matrix */
+  MatrixXd P_;               /**< Inverse covariance error matrix */
   VectorXd g_;               /**< Filter gains */
   double err_;               /**< A priori error */
   unsigned long long count_; /**< Count of filter updates */
