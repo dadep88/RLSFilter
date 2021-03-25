@@ -35,9 +35,11 @@ if(NOT ${PROJECT_NAME}_CLANG_FORMAT_BINARY)
 endif()
 
 
+if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
 add_custom_target(clang-format
         COMMAND ${${PROJECT_NAME}_CLANG_FORMAT_BINARY}
         -i ${ALL_SOURCE_FILES} ${headers} ${test_sources})
+endif()
 
 enable_testing()
 add_subdirectory(test)
