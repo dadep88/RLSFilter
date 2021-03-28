@@ -96,7 +96,7 @@ public:
 
   /// Get a priori estimate error
   /// \return a priori error
-  [[nodiscard]] const double a_priori_err() const noexcept { return err_; };
+  [[nodiscard]] double a_priori_err() const noexcept { return err_; };
 
   /// Get filter gains vector
   /// \return filter gains vector
