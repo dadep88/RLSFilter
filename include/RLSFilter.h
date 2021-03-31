@@ -11,16 +11,19 @@ using namespace Eigen;
 
 namespace rls_filter {
 
-template <typename T> using VectorXt = Matrix<T, Dynamic, 1>;
-template <typename T> using MatrixXt = Matrix<T, Dynamic, Dynamic>;
+template <typename T>
+using VectorXt = Matrix<T, Dynamic, 1>;
+template <typename T>
+using MatrixXt = Matrix<T, Dynamic, Dynamic>;
 
-template <typename T> class RLSFilter {
+template <typename T>
+class RLSFilter {
   static_assert((std::is_same<long double, T>::value ||
                  std::is_same<double, T>::value ||
                  std::is_same<float, T>::value),
                 "T must be: long double, double or float");
 
-private:
+ private:
   unsigned int n_;           /**< Filter order */
   T lam_;                    /**< Forgetting factor */
   T lam_inv_;                /**< Inverse forgetting factor */
@@ -31,15 +34,21 @@ private:
   T err_;                    /**< A priori error */
   unsigned long long count_; /**< Count of filter updates */
 
-public:
+ public:
   /// Recursive least square filter ctor
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
   RLSFilter(unsigned int n, T lam, T delta)
-      : n_(n), lam_(1.0), lam_inv_(1.0), delta_(delta),
-        w_(VectorXt<T>::Zero(n_)), P_(MatrixXt<T>::Identity(n_, n_)),
-        g_(VectorXt<T>::Zero(n_)), err_(0.0), count_(0) {
+      : n_(n),
+        lam_(1.0),
+        lam_inv_(1.0),
+        delta_(delta),
+        w_(VectorXt<T>::Zero(n_)),
+        P_(MatrixXt<T>::Identity(n_, n_)),
+        g_(VectorXt<T>::Zero(n_)),
+        err_(0.0),
+        count_(0) {
     set_forgetting_factor(lam);
     set_initial_covariance_matrix_gain(delta);
     P_ *= delta_;
@@ -116,6 +125,6 @@ public:
   [[nodiscard]] const MatrixXd &P() const noexcept { return P_; };
 };
 
-} // namespace rls_filter
+}  // namespace rls_filter
 
-#endif // RLS_DYN_MODEL_IDENT_RLS_H
+#endif  // RLS_DYN_MODEL_IDENT_RLS_H

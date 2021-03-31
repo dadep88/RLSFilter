@@ -2,14 +2,14 @@
 // Created by Davide Pilastro on 2/27/21.
 //
 
+#include <random>
+
 #include "RLSFilter.h"
 #include "gtest/gtest.h"
-#include <random>
 
 using namespace rls_filter;
 
 TEST(RLSFilter_LongDouble, StadyStateEstimation) {
-
   long double lower_bound = 0;
   long double upper_bound = 10000;
   std::uniform_real_distribution<long double> unif(lower_bound, upper_bound);
@@ -33,7 +33,6 @@ TEST(RLSFilter_LongDouble, StadyStateEstimation) {
 }
 
 TEST(RLSFilter_Double, StadyStateEstimation) {
-
   double lower_bound = 0;
   double upper_bound = 10000;
   std::uniform_real_distribution<double> unif(lower_bound, upper_bound);
@@ -57,7 +56,6 @@ TEST(RLSFilter_Double, StadyStateEstimation) {
 }
 
 TEST(RLSFilter_Float, StadyStateEstimation) {
-
   float lower_bound = 0;
   float upper_bound = 10000;
   std::uniform_real_distribution<float> unif(lower_bound, upper_bound);
