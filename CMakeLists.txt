@@ -2,11 +2,13 @@ cmake_minimum_required(VERSION 3.19)
 project(RLSFilter LANGUAGES CXX VERSION 0.0.0 DESCRIPTION "C++ RLS filter")
 set(CMAKE_CXX_STANDARD 20)
 
-set(CODE_COVERAGE_VERBOSE True)
 set(RLSFilter_ENABLE_DOXYGEN True)
 
-include(cmake/CodeCoverage.cmake)
-APPEND_COVERAGE_COMPILER_FLAGS()
+if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    set(CODE_COVERAGE_VERBOSE True)
+    include(cmake/CodeCoverage.cmake)
+    APPEND_COVERAGE_COMPILER_FLAGS()
+ENDIF()
 
 include(cmake/SourcesAndHeaders.cmake)
 
