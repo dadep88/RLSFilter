@@ -11,42 +11,65 @@ using namespace Eigen;
 
 namespace rls_filter {
 
-template <typename T>
-using VectorXt = Matrix<T, Dynamic, 1>;
-template <typename T>
-using MatrixXt = Matrix<T, Dynamic, Dynamic>;
+template <bool B>
+using EnableIfB = typename std::enable_if<B, int>::type;
 
-template <typename T>
+template <typename T, int N>
 class RLSFilter {
   static_assert((std::is_same<long double, T>::value ||
                  std::is_same<double, T>::value ||
                  std::is_same<float, T>::value),
                 "T must be: long double, double or float");
 
+ public:
+  typedef Matrix<T, N, 1> VectorXt;
+  typedef Matrix<T, N, N> MatrixXt;
+
  private:
   unsigned int n_;           /**< Filter order */
   T lam_;                    /**< Forgetting factor */
   T lam_inv_;                /**< Inverse forgetting factor */
   T delta_;                  /**< Initial gain value of matrix P */
-  VectorXt<T> w_;            /**< Filter coefficients vector */
-  MatrixXt<T> P_;            /**< Inverse covariance error matrix */
-  MatrixXt<T> g_;            /**< Filter gains */
+  VectorXt w_;               /**< Filter coefficients vector */
+  MatrixXt P_;               /**< Inverse covariance error matrix */
+  VectorXt g_;               /**< Filter gains */
   T err_;                    /**< A priori error */
   unsigned long long count_; /**< Count of filter updates */
 
  public:
-  /// Recursive least square filter ctor
+  /// Recursive least square filter static ctor
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
+  template <int N1 = N, EnableIfB<(N1 > 0)> = 0>
+  RLSFilter(T lam, T delta)
+      : n_(N),
+        lam_(1.0),
+        lam_inv_(1.0),
+        delta_(delta),
+        w_(VectorXt::Zero()),
+        P_(MatrixXt::Identity()),
+        g_(VectorXt::Zero()),
+        err_(0.0),
+        count_(0) {
+    set_forgetting_factor(lam);
+    set_initial_covariance_matrix_gain(delta);
+    P_ *= delta_;
+  }
+
+  /// Recursive least square filter dynamic ctor
+  /// \param n - Filter order
+  /// \param lam - Forgetting factor
+  /// \param delta - Initial gain value of matrix P
+  template <int N1 = N, EnableIfB<(N1 < 0)> = 0>
   RLSFilter(unsigned int n, T lam, T delta)
       : n_(n),
         lam_(1.0),
         lam_inv_(1.0),
         delta_(delta),
-        w_(VectorXt<T>::Zero(n_)),
-        P_(MatrixXt<T>::Identity(n_, n_)),
-        g_(VectorXt<T>::Zero(n_)),
+        w_(VectorXt::Zero(n_)),
+        P_(MatrixXt::Identity(n_, n_)),
+        g_(VectorXt::Zero(n)),
         err_(0.0),
         count_(0) {
     set_forgetting_factor(lam);
@@ -57,11 +80,11 @@ class RLSFilter {
   /// Update filter with new data
   /// \param x - Input vector
   /// \param y - Output value
-  void update(const VectorXt<T> &x, T y) {
+  void update(const VectorXt &x, T y) {
     err_ = y - predict(x);
-    MatrixXt<T> alpha = P_ * lam_inv_;
+    MatrixXt alpha = P_ * lam_inv_;
     g_ = (P_ * x) / (lam_ + x.transpose() * P_ * x);
-    P_ = (MatrixXt<T>::Identity(n_, n_) - g_ * x.transpose()) * alpha;
+    P_ = (MatrixXt::Identity(n_, n_) - g_ * x.transpose()) * alpha;
     w_ += g_ * err_;
     count_++;
   };
@@ -69,13 +92,11 @@ class RLSFilter {
   /// Estimate filter output
   /// \param x
   /// \return a priori output estimate
-  [[nodiscard]] T predict(const VectorXt<T> &x) const noexcept {
-    return w_.transpose() * x;
-  };
+  T predict(const VectorXt &x) const noexcept { return w_.transpose() * x; };
 
   /// Set filter coefficient values
   /// \param w0 - Coefficient values
-  void set_estimated_coefficients(const VectorXt<T> &w0) {
+  void set_estimated_coefficients(const VectorXt &w0) {
     if (w0.rows() == n_) {
       w_ = w0;
     } else {
@@ -108,21 +129,19 @@ class RLSFilter {
 
   /// Get estimated filter coefficients
   /// \return vector of estimated filter coefficients
-  [[nodiscard]] const VectorXt<T> &estimated_coefficients() const noexcept {
-    return w_;
-  };
+  const VectorXt &estimated_coefficients() const noexcept { return w_; };
 
   /// Get a priori estimate error
   /// \return a priori error
-  [[nodiscard]] T a_priori_err() const noexcept { return err_; };
+  T a_priori_err() const noexcept { return err_; };
 
   /// Get filter gains vector
   /// \return filter gains vector
-  [[nodiscard]] const VectorXd &gains() const noexcept { return g_; };
+  const VectorXt &gains() const noexcept { return g_; };
 
   /// Get filter covariance matrix
   /// \return filter covariance matrix
-  [[nodiscard]] const MatrixXd &P() const noexcept { return P_; };
+  const MatrixXt &P() const noexcept { return P_; };
 };
 
 }  // namespace rls_filter
