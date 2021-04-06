@@ -150,16 +150,13 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Float) {
 }
 
 TEST(RLSFilter_DynamicCtor, CreateRandomOrderFilter) {
-    int order_lower_bound = 1;
-    int order_upper_bound = 100;
-    std::uniform_int_distribution<int> unif(order_lower_bound, order_upper_bound);
-    std::default_random_engine re;
+  int order_lower_bound = 1;
+  int order_upper_bound = 100;
+  std::uniform_int_distribution<int> unif(order_lower_bound, order_upper_bound);
+  std::default_random_engine re;
 
-    int random_order = unif(re);
-    RLSFilter<float, -1> rls_filter(random_order, 0.99999, 1.0);
-    VectorXf w0 = VectorXf::Zero(random_order);
-    ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w0, 1e-3));
+  int random_order = unif(re);
+  RLSFilter<float, -1> rls_filter(random_order, 0.99999, 1.0);
+  VectorXf w0 = VectorXf::Zero(random_order);
+  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w0, 1e-3));
 }
-
-
-

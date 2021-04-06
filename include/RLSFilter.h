@@ -14,6 +14,10 @@ namespace rls_filter {
 template <bool B>
 using EnableIfB = typename std::enable_if<B, int>::type;
 
+/// Template class implementing a Recursive Least Square (RLS) filter, managing
+/// both static and dynamic implementation.
+/// \tparam T filter data values type
+/// \tparam N filter order(Static) or -1 (Dynamic)
 template <typename T, int N>
 class RLSFilter {
   static_assert((std::is_same<long double, T>::value ||
@@ -38,7 +42,6 @@ class RLSFilter {
 
  public:
   /// Recursive least square filter static ctor
-  /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
   template <int N1 = N, EnableIfB<(N1 > 0)> = 0>
@@ -61,7 +64,7 @@ class RLSFilter {
   /// \param n - Filter order
   /// \param lam - Forgetting factor
   /// \param delta - Initial gain value of matrix P
-  template <int N1 = N, EnableIfB<(N1 < 0)> = 0>
+  template <int N1 = N, EnableIfB<(N1 == -1)> = 0>
   RLSFilter(unsigned int n, T lam, T delta)
       : n_(n),
         lam_(1.0),

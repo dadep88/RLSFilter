@@ -2,7 +2,7 @@
 
 [![Linux / OXS build](https://github.com/dadep88/RLSFilter/actions/workflows/workflow-build.yml/badge.svg?branch=main&event=push)](https://github.com/dadep88/RLSFilter/actions/workflows/workflow-build.yml)
 
-C++ implementation of a Recursive Least Squares (RLS) filter
+C++ template library implementing a Recursive Least Squares (RLS) filter, managing static and dynamic implementation and different floating point base type (*float*, *double*, *long double*).
 
 ## Reference
 
