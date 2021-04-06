@@ -55,8 +55,8 @@ class RLSFilter {
         g_(VectorXt::Zero()),
         err_(0.0),
         count_(0) {
-    set_forgetting_factor(lam);
-    set_initial_covariance_matrix_gain(delta);
+      setForgettingFactor(lam);
+      setInitialCovarianceMatrixGain(delta);
     P_ *= delta_;
   }
 
@@ -75,8 +75,8 @@ class RLSFilter {
         g_(VectorXt::Zero(n)),
         err_(0.0),
         count_(0) {
-    set_forgetting_factor(lam);
-    set_initial_covariance_matrix_gain(delta);
+      setForgettingFactor(lam);
+      setInitialCovarianceMatrixGain(delta);
     P_ *= delta_;
   }
 
@@ -99,7 +99,7 @@ class RLSFilter {
 
   /// Set filter coefficient values
   /// \param w0 - Coefficient values
-  void set_estimated_coefficients(const VectorXt &w0) {
+  void setEstimatedCoefficients(const VectorXt &w0) {
     if (w0.rows() == n_) {
       w_ = w0;
     } else {
@@ -109,7 +109,7 @@ class RLSFilter {
 
   ///  Set forgetting factor value
   /// \param lam - Forgetting factor value
-  void set_forgetting_factor(double lam) {
+  void setForgettingFactor(double lam) {
     if ((lam > 0) && (lam <= 1.0)) {
       lam_ = lam;
       lam_inv_ = 1.0 / lam_;
@@ -121,7 +121,7 @@ class RLSFilter {
 
   /// Set initial covariance matrix gain
   /// \param delta
-  void set_initial_covariance_matrix_gain(double delta) {
+  void setInitialCovarianceMatrixGain(double delta) {
     if (delta > 0.0) {
       delta_ = delta;
     } else {
@@ -132,7 +132,7 @@ class RLSFilter {
 
   /// Get estimated filter coefficients
   /// \return vector of estimated filter coefficients
-  const VectorXt &estimated_coefficients() const noexcept { return w_; };
+  const VectorXt &estimatedCoefficients() const noexcept { return w_; };
 
   /// Get a priori estimate error
   /// \return a priori error

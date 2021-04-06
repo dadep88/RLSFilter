@@ -23,7 +23,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_LongDouble) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<long double, 4, 1> x(4);
@@ -31,7 +31,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_LongDouble) {
     double y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_DynamicCtor, StadyStateEstimation_LongDouble) {
@@ -46,7 +46,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_LongDouble) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<long double, 4, 1> x(4);
@@ -54,7 +54,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_LongDouble) {
     double y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_StaticCtor, StadyStateEstimation_Double) {
@@ -69,7 +69,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Double) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<double, 4, 1> x(4);
@@ -77,7 +77,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Double) {
     double y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Double) {
@@ -92,7 +92,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Double) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<double, 4, 1> x(4);
@@ -100,7 +100,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Double) {
     double y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_StaticCtor, StadyStateEstimation_Float) {
@@ -115,7 +115,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Float) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<float, 4, 1> x(4);
@@ -123,7 +123,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Float) {
     float y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Float) {
@@ -138,7 +138,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Float) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-  rls_filter.set_estimated_coefficients(w0);
+    rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<float, 4, 1> x(4);
@@ -146,7 +146,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Float) {
     float y = x.transpose() * w_real + unif(re) * 0.01;
     rls_filter.update(x, y);
   }
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w_real, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-3));
 }
 
 TEST(RLSFilter_DynamicCtor, CreateRandomOrderFilter) {
@@ -158,5 +158,5 @@ TEST(RLSFilter_DynamicCtor, CreateRandomOrderFilter) {
   int random_order = unif(re);
   RLSFilter<float, -1> rls_filter(random_order, 0.99999, 1.0);
   VectorXf w0 = VectorXf::Zero(random_order);
-  ASSERT_TRUE(rls_filter.estimated_coefficients().isApprox(w0, 1e-3));
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w0, 1e-3));
 }
