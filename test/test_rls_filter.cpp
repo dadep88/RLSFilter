@@ -23,7 +23,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_LongDouble) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<long double, 4, 1> x(4);
@@ -46,7 +46,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_LongDouble) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<long double, 4, 1> x(4);
@@ -69,7 +69,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Double) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<double, 4, 1> x(4);
@@ -92,7 +92,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Double) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<double, 4, 1> x(4);
@@ -115,7 +115,7 @@ TEST(RLSFilter_StaticCtor, StadyStateEstimation_Float) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<float, 4, 1> x(4);
@@ -138,7 +138,7 @@ TEST(RLSFilter_DynamicCtor, StadyStateEstimation_Float) {
   w_real << 4.0, 0.5, 3.0, 1.0;
   w0 << 1.0, 1.0, 1.0, 1.0;
 
-    rls_filter.setEstimatedCoefficients(w0);
+  rls_filter.setEstimatedCoefficients(w0);
 
   for (auto i = 0; i < ITERATIONS; i++) {
     Matrix<float, 4, 1> x(4);

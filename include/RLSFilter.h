@@ -55,8 +55,8 @@ class RLSFilter {
         g_(VectorXt::Zero()),
         err_(0.0),
         count_(0) {
-      setForgettingFactor(lam);
-      setInitialCovarianceMatrixGain(delta);
+    setForgettingFactor(lam);
+    setInitialCovarianceMatrixGain(delta);
     P_ *= delta_;
   }
 
@@ -75,8 +75,8 @@ class RLSFilter {
         g_(VectorXt::Zero(n_)),
         err_(0.0),
         count_(0) {
-      setForgettingFactor(lam);
-      setInitialCovarianceMatrixGain(delta);
+    setForgettingFactor(lam);
+    setInitialCovarianceMatrixGain(delta);
     P_ *= delta_;
   }
 
@@ -148,15 +148,15 @@ class RLSFilter {
 
   /// Get number of performed updates
   /// \return update count
-  unsigned long long count() const noexcept {return count_; };
+  unsigned long long count() const noexcept { return count_; };
 
   /// Reset filter to initial values
-  void reset() noexcept{
-      w_ = VectorXt::Zero(n_);
-      P_ = MatrixXt::Identity(n_, n_) * delta_;
-      g_ = VectorXt::Zero(n_);
-      err_ = 0.0;
-      count_ = 0;
+  void reset() noexcept {
+    w_ = VectorXt::Zero(n_);
+    P_ = MatrixXt::Identity(n_, n_) * delta_;
+    g_ = VectorXt::Zero(n_);
+    err_ = 0.0;
+    count_ = 0;
   };
 };
 
