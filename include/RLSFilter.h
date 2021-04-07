@@ -72,7 +72,7 @@ class RLSFilter {
         delta_(delta),
         w_(VectorXt::Zero(n_)),
         P_(MatrixXt::Identity(n_, n_)),
-        g_(VectorXt::Zero(n)),
+        g_(VectorXt::Zero(n_)),
         err_(0.0),
         count_(0) {
       setForgettingFactor(lam);
@@ -145,6 +145,19 @@ class RLSFilter {
   /// Get filter covariance matrix
   /// \return filter covariance matrix
   const MatrixXt &P() const noexcept { return P_; };
+
+  /// Get number of performed updates
+  /// \return update count
+  unsigned long long count() const noexcept {return count_; };
+
+  /// Reset filter to initial values
+  void reset() noexcept{
+      w_ = VectorXt::Zero(n_);
+      P_ = MatrixXt::Identity(n_, n_) * delta_;
+      g_ = VectorXt::Zero(n_);
+      err_ = 0.0;
+      count_ = 0;
+  };
 };
 
 }  // namespace rls_filter

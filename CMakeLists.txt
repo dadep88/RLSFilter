@@ -4,12 +4,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(RLSFilter_ENABLE_DOXYGEN True)
 
-if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    set(CODE_COVERAGE_VERBOSE True)
-    include(cmake/CodeCoverage.cmake)
-    APPEND_COVERAGE_COMPILER_FLAGS()
-ENDIF()
-
 include(cmake/SourcesAndHeaders.cmake)
 
 add_library(${PROJECT_NAME} INTERFACE)
