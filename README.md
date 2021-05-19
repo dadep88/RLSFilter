@@ -10,7 +10,7 @@ https://en.wikipedia.org/wiki/Recursive_least_squares_filter
 
 ## Dependencies
 
-* Eigen
+* Eigen3
 
 ## Authors
 
