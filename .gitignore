@@ -40,3 +40,5 @@ cmake-build*
 
 # Documentation
 docs
+
+build/

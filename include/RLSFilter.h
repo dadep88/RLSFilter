@@ -86,9 +86,9 @@ class RLSFilter {
   void update(const VectorXt &x, T y) {
     err_ = y - predict(x);
     MatrixXt alpha = P_ * lam_inv_;
-    g_ = (P_ * x) / (lam_ + x.transpose() * P_ * x);
-    P_ = (MatrixXt::Identity(n_, n_) - g_ * x.transpose()) * alpha;
-    w_ += g_ * err_;
+    g_.noalias() = (P_ * x) / (lam_ + x.transpose() * P_ * x);
+    P_.noalias() = (MatrixXt::Identity(n_, n_) - g_ * x.transpose()) * alpha;
+    w_.noalias() += g_ * err_;
     count_++;
   };
 
