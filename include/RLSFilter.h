@@ -12,7 +12,7 @@ using namespace Eigen;
 namespace rls_filter {
 
 template <bool B>
-using EnableIfB = typename std::enable_if<B, int>::type;
+using EnableIfB = std::enable_if_t<B, int>;
 
 /// Template class implementing a Recursive Least Square (RLS) filter, managing
 /// both static and dynamic implementation.
@@ -21,13 +21,13 @@ using EnableIfB = typename std::enable_if<B, int>::type;
 template <typename T, int N>
 class RLSFilter {
   static_assert((std::is_same<long double, T>::value ||
-                 std::is_same<double, T>::value ||
+                 std::is_same_v<double, T> ||
                  std::is_same<float, T>::value),
                 "T must be: long double, double or float");
 
  public:
-  typedef Matrix<T, N, 1> VectorXt;
-  typedef Matrix<T, N, N> MatrixXt;
+  using VectorXt = Matrix<T, N, 1>;
+  using MatrixXt = Matrix<T, N, N>;
 
  private:
   unsigned int n_;           /**< Filter order */
@@ -36,6 +36,7 @@ class RLSFilter {
   T delta_;                  /**< Initial gain value of matrix P */
   VectorXt w_;               /**< Filter coefficients vector */
   MatrixXt P_;               /**< Inverse covariance error matrix */
+  MatrixXt P_supp_;          /**< Inverse covariance error matrix */
   VectorXt g_;               /**< Filter gains */
   T err_;                    /**< A priori error */
   unsigned long long count_; /**< Count of filter updates */
@@ -85,9 +86,9 @@ class RLSFilter {
   /// \param y - Output value
   void update(const VectorXt &x, T y) {
     err_ = y - predict(x);
-    MatrixXt alpha = P_ * lam_inv_;
+    P_supp_.noalias() = P_ * lam_inv_;
     g_.noalias() = (P_ * x) / (lam_ + x.transpose() * P_ * x);
-    P_.noalias() = (MatrixXt::Identity(n_, n_) - g_ * x.transpose()) * alpha;
+    P_.noalias() = (MatrixXt::Identity(n_, n_) - g_ * x.transpose()) * P_supp_;
     w_.noalias() += g_ * err_;
     count_++;
   };
