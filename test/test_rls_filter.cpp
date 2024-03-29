@@ -160,3 +160,27 @@ TEST(RLSFilter_DynamicCtor, CreateRandomOrderFilter) {
   VectorXf w0 = VectorXf::Zero(random_order);
   ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w0, 1e-3));
 }
+
+TEST(RLSFilter_StaticCtor, StadyStateEstimation_Float_One_Dimension) {
+  float lower_bound = 0;
+  float upper_bound = 10000;
+  std::uniform_real_distribution<float> unif(lower_bound, upper_bound);
+  std::default_random_engine re;
+
+  RLSFilter<float, 1> rls_filter(0.99999, 1.0);
+  Matrix<float, 1, 1> w_real;
+  Matrix<float, 1, 1> w0;
+  w_real << 1.0;
+  w0 << 1.0;
+
+  rls_filter.setEstimatedCoefficients(w0);
+
+  for (auto i = 0; i < ITERATIONS; i++) {
+    Matrix<float, 1, 1> x;
+    x << unif(re);
+    float y = x.transpose() * w_real + unif(re) * 0.01;
+    rls_filter.update(x, y);
+  }
+  std::cout << rls_filter.estimatedCoefficients() << std::endl;
+  ASSERT_TRUE(rls_filter.estimatedCoefficients().isApprox(w_real, 1e-2));
+}
